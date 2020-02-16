@@ -1,13 +1,14 @@
 import express from 'express';
-let app = express();
 
-let hostname = 'localhost';
-let port = 3333;
+import connectDB from './config/connectDB';
+
+let app = express();
+connectDB();
 
 app.get("/helloworld", (req, res) => {
-  res.send("<h1>Hello World!!!<h1>")
+  res.send(`<h1>Hello world!!!</h1>`)
 });
 
-app.listen(port, hostname, () => {
+app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
   console.log('Hello world!!!');
-})
+});

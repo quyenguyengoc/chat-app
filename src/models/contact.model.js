@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-let Schema = mongoose.schema;
+let Schema = mongoose.Schema;
 
 let ContactSchema = new Schema({
   userID: String,
