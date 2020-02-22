@@ -1,9 +1,10 @@
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
+require('dotenv').config()
 
 let mongoStore = connectMongo(session);
 
-let ENV = process.env;
+const ENV = process.env;
 let sessionStore = new mongoStore( {
   url: `${ENV.DB_CONN}://${ENV.DB_HOST}:${ENV.DB_PORT}/${ENV.DB_NAME}`,
   autoReconnect: true

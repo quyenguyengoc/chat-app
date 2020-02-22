@@ -7,9 +7,7 @@ import configViewEngine from './config/viewEngine';
 import webRoutes from './routers/web';
 import configSession from './config/session';
 
-var _ = require('lodash');
-
-global._ = _;
+global._ = require('lodash');
 
 let app = express();
 
