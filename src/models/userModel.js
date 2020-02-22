@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
-let Schema = mongoose.schema;
+let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
   username: String,
+  fullname: String,
   gender: {
     type: String, default: "male"
   },
@@ -33,5 +34,14 @@ let UserSchema = new Schema({
   updatedAt: { type: Number, default: Date.now },
   deletedAt: { type: Number, default: null }
 });
+
+UserSchema.statics = {
+  insert(data) {
+    return this.create(data);
+  },
+  find(condition) {
+    return this.findOne(condition).exec();
+  }
+}
 
 module.exports = mongoose.model('user', UserSchema);

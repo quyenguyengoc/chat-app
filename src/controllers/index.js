@@ -1,5 +1,9 @@
 import { homeController } from './homeController';
-import {sessionController} from './sessionController';
+import { sessionController } from './sessionController';
+import { userController } from './userController';
 
-export const home = homeController;
-export const session = sessionController;
+export const controller = {
+  home: homeController,
+  session: sessionController,
+  user: userController,
+}

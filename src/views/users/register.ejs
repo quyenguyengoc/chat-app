@@ -1,0 +1,100 @@
+<% extend('./../layouts/auth'); %>
+
+<% result = _.first(result) || { flag: true } %>
+
+<div class="container-login100" style="background-image: url('images/background/image.jpg');">
+  <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+    <form class="login100-form validate-form" method="POST" action="register">
+      <span class="login100-form-title p-b-49">
+      Register
+      </span>
+      <div class="m-b-23">
+        <div class="wrap-input100 validate-input <% if (!result.flag && !_.isEmpty(result['detail']['fullname'])) { %> alert-validate <% } %>">
+          <span class="label-input100">Fullname</span>
+          <input class="input100" type="text" name="fullname" placeholder="Type your fullname">
+          <span class="focus-input100" data-symbol="&#xf206;"></span>
+        </div>
+        <% if (!result.flag && !_.isEmpty(result['detail']['fullname'])) { %>
+          <small class="text-danger"><%- _.first(result['detail']['fullname']); %></small>
+        <% } %>
+      </div>
+      <div class="m-b-23">
+        <div class="wrap-input100 validate-input <% if (!result.flag && !_.isEmpty(result['detail']['username'])) { %> alert-validate <% } %>">
+          <span class="label-input100">Username</span>
+          <input class="input100" type="text" name="username" placeholder="Type your username">
+          <span class="focus-input100" data-symbol="&#xf206;"></span>
+        </div>
+        <% if (!result.flag && !_.isEmpty(result['detail']['username'])) { %>
+          <small class="text-danger"><%- _.first(result['detail']['username']); %></small>
+        <% } %>
+      </div>
+      <div class="m-b-23">
+        <div class="wrap-input100 <% if (!result.flag && !_.isEmpty(result['detail']['email'])) { %> alert-validate <% } %>">
+          <span class="label-input100">Email</span>
+          <input class="input100" type="text" name="email" placeholder="Type your email">
+          <span class="focus-input100" data-symbol="&#xf190;"></span>
+        </div>
+        <% if (!result.flag && !_.isEmpty(result['detail']['email'])) { %>
+          <small class="text-danger"><%- _.first(result['detail']['email']); %></small>
+        <% } %>
+      </div>
+      <div class="m-b-23">
+        <div class="wrap-input100 <% if (!result.flag && !_.isEmpty(result['detail']['pwd'])) { %> alert-validate <% } %>">
+          <span class="label-input100">Password</span>
+          <input class="input100" type="password" name="pwd" placeholder="Type your password">
+          <span class="focus-input100" data-symbol="&#xf190;"></span>
+        </div>
+        <% if (!result.flag && !_.isEmpty(result['detail']['pwd'])) { %>
+          <small class="text-danger"><%- _.first(result['detail']['pwd']); %></small>
+        <% } %>
+      </div>
+      <div>
+        <div class="wrap-input100">
+          <span class="label-input100 <% if (!result.flag && !_.isEmpty(result['detail']['pwdConfirm'])) { %> alert-validate <% } %>">Password Confirmation</span>
+          <input class="input100" type="password" name="pwdConfirm" placeholder="Re-type your password">
+          <span class="focus-input100" data-symbol="&#xf190;"></span>
+        </div>
+        <% if (!result.flag && !_.isEmpty(result['detail']['pwdConfirm'])) { %>
+          <small class="text-danger"><%- _.first(result['detail']['pwdConfirm']); %></small>
+        <% } %>
+      </div>
+      <div class="text-right p-t-8 p-b-31">
+        <a href="#">
+        Forgot password?
+        </a>
+      </div>
+      <div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+          <div class="login100-form-bgbtn"></div>
+          <button class="login100-form-btn">
+          Login
+          </button>
+        </div>
+      </div>
+      <div class="txt1 text-center p-t-54 p-b-20">
+        <span>
+        Or Sign Up Using
+        </span>
+      </div>
+      <div class="flex-c-m">
+        <a href="#" class="login100-social-item bg1">
+        <i class="fa fa-facebook"></i>
+        </a>
+        <a href="#" class="login100-social-item bg2">
+        <i class="fa fa-twitter"></i>
+        </a>
+        <a href="#" class="login100-social-item bg3">
+        <i class="fa fa-google"></i>
+        </a>
+      </div>
+      <div class="flex-col-c p-t-50">
+        <span class="txt1 p-b-17">
+        Or Sign Up Using
+        </span>
+        <a href="#" class="txt2">
+        Sign Up
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
