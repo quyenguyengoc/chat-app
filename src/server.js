@@ -8,6 +8,7 @@ import webRoutes from './routers/web';
 import configSession from './config/session';
 
 global._ = require('lodash');
+const path = require('path');
 
 let app = express();
 
@@ -16,6 +17,7 @@ configSession(app);
 configViewEngine(app);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(connectFlash());
+app.use(express.static(path.join(__dirname, '/public')));
 webRoutes(app);
 
 app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {

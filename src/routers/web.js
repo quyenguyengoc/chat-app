@@ -13,9 +13,11 @@ let routes = (app) => {
   
   router.get('/login', controller.session.login);
   
-  router.get('/register', controller.user.newUser);
+  router.get('/users/register', controller.user.newUser);
 
-  router.post('/register', validation.user.userValidation, controller.user.insert)
+  router.post('/users/register', validation.user.userValidation, controller.user.insert);
+
+  router.get('/users/active/:token', controller.user.active);
 
   return app.use('/', router);
 }

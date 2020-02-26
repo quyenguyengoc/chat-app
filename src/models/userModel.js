@@ -17,7 +17,7 @@ let UserSchema = new Schema({
   local: {
     email: { type: String, trim: true },
     password: String,
-    isActive: { type: Boolean, default: false },
+    isActived: { type: Boolean, default: false },
     verifyToken: String
   },
   facebook: {
@@ -41,6 +41,16 @@ UserSchema.statics = {
   },
   find(condition) {
     return this.findOne(condition).exec();
+  },
+  active(token) {
+    let condition = {
+      'local.verifyToken': token
+    }
+    let updatedColumns = {
+      'local.isActived': true,
+      'updatedAt': new Date()
+    }
+    return this.findOneAndUpdate(condition, updatedColumns).exec();
   }
 }
 

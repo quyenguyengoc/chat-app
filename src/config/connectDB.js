@@ -11,7 +11,7 @@ let connectDB  = () => {
   
   let URI = `${ENV.DB_CONN}://${ENV.DB_HOST}:${ENV.DB_PORT}/${ENV.DB_NAME}`;
   
-  return mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+  return mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false } );
 }
 
 module.exports = connectDB;
