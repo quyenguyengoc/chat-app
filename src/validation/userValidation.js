@@ -9,18 +9,19 @@ let userValidation = [
     .trim(),
   check('username').not().isEmpty().withMessage(transModels.users.validation.username.blank).trim()
   .custom((value) => {
-    userModel.find( { username: value } )
+    return userModel.find( { username: value } )
       .then(user => {
-        return _.isUndefined(user);
+        return _.isNull(user) ? Promise.resolve() : Promise.reject();
       })
   }).withMessage(transModels.users.validation.username.uniq),
   check('email')
     .not().isEmpty().withMessage(transModels.users.validation.local.email.blank).trim()
     .isEmail().withMessage(transModels.users.validation.local.email.incorrect)
     .custom((value) => {
-      userModel.find( { local: { email: value } } )
+      return userModel.find( { 'local.email': value } )
         .then(user => {
-          return _.isUndefined(user);
+          console.log(user);
+          return _.isNull(user) ? Promise.resolve() : Promise.reject();
         })
     }).withMessage(transModels.users.validation.local.email.uniq),
   check('pwd')

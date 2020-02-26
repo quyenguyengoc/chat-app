@@ -26,9 +26,19 @@ export const transModels = {
   }
 };
 
-export const messages = {
+export const transMessages = {
   register: {
     success: 'You have been successfully registered.',
     failure: 'Registration failed.'
+  },
+  activation: {
+    success: 'Your account has been activated!',
+    failure: 'URL is invalid'
+  }
+}
+
+export const transMailers = {
+  activation: {
+    subject: 'Account activation'
   }
 }
