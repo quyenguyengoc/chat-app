@@ -7,6 +7,7 @@ import { transMessages } from './../../locales/en';
 
 let register = (req) => {
   return new Promise(async (resolve, reject) => {
+    logger.info('Register>insert>init>start');
     let userInfo = req.body;
     let user = {
       username: userInfo['username'],
@@ -18,27 +19,34 @@ let register = (req) => {
       }
     };
 
-    await userModel.insert(user);
-    let activeURL = `${req.protocol}://${req.get('host')}/users/active/${user['local']['verifyToken']}`;
-    userMailer.sendActivationMail(user, activeURL)
-      .then(result => {
-        resolve(transMessages.register.success);
-      })
-      .catch(error => {
-        reject(transMessages.register.failure);
-      });
+    try {
+      await userModel.insert(user);
+      logger.info('Register>insert>success');
+      let activeURL = `${req.protocol}://${req.get('host')}/users/active/${user['local']['verifyToken']}`;
+      logger.info('Register>send-active-mail>start');
+      await userMailer.sendActivationMail(user, activeURL);
+      logger.info('Register>send-active-mail>success');
+      resolve(transMessages.register.success);
+    } catch (error) {
+      logger.error(`Register>insert>init>fail: ${error}`);
+      reject(transMessages.register.failure);
+    }
   })
 }
 
 let active = (token) => {
+  logger.info('Active>init');
   return new Promise(async (resolve, reject) => {
+    logger.info('Active>check_token>start');
     let user = await userModel.find( { 'local.verifyToken': token, 'local.isActived': false } );
     if (_.isNull(user)) {
+      logger.error('Active>check_token>fail');
       return reject(transMessages.activation.failure);
-    } else {
-      await userModel.active(token)
-      resolve(transMessages.activation.success);
     }
+
+    logger.info('Active>success');
+    await userModel.active(token)
+    resolve(transMessages.activation.success);
   });
 }
 

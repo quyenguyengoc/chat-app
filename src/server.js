@@ -8,6 +8,7 @@ import webRoutes from './routers/web';
 import configSession from './config/session';
 
 global._ = require('lodash');
+global.logger = require('logger').createLogger('logs/development.log');
 const path = require('path');
 
 let app = express();
@@ -21,5 +22,5 @@ app.use(express.static(path.join(__dirname, '/public')));
 webRoutes(app);
 
 app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
-  console.log('Hello world!!!');
+  logger.info('Hello world!!!');
 });

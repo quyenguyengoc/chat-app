@@ -10,6 +10,7 @@ let newUser = (req, res) => {
 }
 
 let insert = async (req, res) => {
+  logger.info('Register>Validation>start');
   let userValidation = validationResult(req);
   let result = {
     flag: userValidation.isEmpty(),
@@ -17,16 +18,20 @@ let insert = async (req, res) => {
     detail: {}
   };
   if (!result.flag) {
+    logger.error('Register>Validation>fail');
     result.message = transMessages.register.failure;
     userValidation.array().forEach(error => {
       if (_.isUndefined(result['detail'][error.param])) { result['detail'][error.param] = []; }
       result['detail'][error.param].push(error.msg);
     });
   } else {
+    logger.info('Register>Validation>success');
     try {
       let registerResult = await userService.register(req);
+      logger.info('Register>insert>success');
       result.message = registerResult;
     } catch (error) {
+      logger.error('Register>insert>fail');
       result.flag = false;
       result.message = error;
     }
@@ -37,14 +42,16 @@ let insert = async (req, res) => {
 }
 
 let active = async (req, res) => {
+  logger.info('Active>start');
+  let token = req.params.token;
   let result;
   try {
-    console.log(`Active with token ${req.params.token}`);
-    result = await userService.active(req.params.token);
-    console.log(`Active with token successfully: ${req.params.token}`);
+    logger.info(`Active>start: ${token}`);
+    result = await userService.active(token);
+    logger.info(`Active>success: ${token}`);
   } catch(error) {
     result = error;
-    console.log(`Active fail with token: ${req.params.token}, reason: ${result}`);
+    logger.error(`Active>fail: ${token}, error: ${error}`);
   }
   req.flash('result', result);
 
