@@ -2,6 +2,9 @@ import express from 'express';
 
 import { controller } from './../controllers/index';
 import { validation } from './../validation/index';
+import { localAuth } from './../controllers/passport/local';
+
+localAuth();
 
 let router = express.Router();
 
@@ -12,6 +15,8 @@ let routes = (app) => {
   router.get('/', controller.home.getHome);
   
   router.get('/login', controller.session.login);
+  
+  router.post('/login', validation.authen.authenValidation, controller.session.authen);
   
   router.get('/users/register', controller.user.newUser);
 

@@ -50,7 +50,37 @@ let active = (token) => {
   });
 }
 
+let authen = (loginid, pwd) => {
+  logger.info('Authentication>start');
+  return new Promise(async (resolve, reject) => {
+    logger.info(`Authentication>findLoginid: ${loginid}>start`);
+    let condition = {
+      $or: [ { 'username': loginid }, { 'local.email': loginid } ]
+    }
+    userModel.find(condition)
+      .then(user => {
+        logger.info(`Authentication>findLoginid: ${loginid}>success`);
+        logger.info(`Authentication>authenticate: ${loginid}>start`);
+        if (user.authenticate(pwd)) {
+          if (user.local.isActived) {
+            logger.info(`Authentication>authenticate: ${loginid}>success`);
+            return resolve(user);
+          }
+          logger.error(`Authentication>authenticate: ${loginid}>fail`);
+          return reject(transMessages.login.failure.notActived);
+        }
+        logger.error(`Authentication>authenticate: ${loginid}>fail`);
+        reject(transMessages.login.failure.invalid);
+      })
+      .catch(error => {
+        logger.error(`Authentication>findLoginid: ${loginid}>fail`);
+        reject(error);
+      });
+  })
+}
+
 module.exports = {
   register: register,
-  active: active
+  active: active,
+  authen: authen
 }
