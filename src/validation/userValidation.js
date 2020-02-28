@@ -20,7 +20,6 @@ let userValidation = [
     .custom((value) => {
       return userModel.find( { 'local.email': value } )
         .then(user => {
-          console.log(user);
           return _.isNull(user) ? Promise.resolve() : Promise.reject();
         })
     }).withMessage(transModels.users.validation.local.email.uniq),

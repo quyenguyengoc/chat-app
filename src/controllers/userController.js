@@ -14,7 +14,7 @@ let insert = async (req, res) => {
   let userValidation = validationResult(req);
   let result = {
     flag: userValidation.isEmpty(),
-    message: '',
+    message: undefined,
     detail: {}
   };
   if (!result.flag) {
@@ -44,13 +44,19 @@ let insert = async (req, res) => {
 let active = async (req, res) => {
   logger.info('Active>start');
   let token = req.params.token;
-  let result;
+  let result = {
+    flag: true,
+    message: undefined,
+    detail: {}
+  };
   try {
     logger.info(`Active>start: ${token}`);
-    result = await userService.active(token);
+    await userService.active(token);
+    result.message = transMessages.activation.success;
     logger.info(`Active>success: ${token}`);
   } catch(error) {
-    result = error;
+    result.message = transMessages.activation.failure;
+    result.flag = false;
     logger.error(`Active>fail: ${token}, error: ${error}`);
   }
   req.flash('result', result);
