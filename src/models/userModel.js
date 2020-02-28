@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 let Schema = mongoose.Schema;
 
@@ -51,6 +52,12 @@ UserSchema.statics = {
       'updatedAt': new Date()
     }
     return this.findOneAndUpdate(condition, updatedColumns).exec();
+  }
+}
+
+UserSchema.methods = {
+  authenticate(pwd) {
+    return bcrypt.compareSync(pwd, this.local.password);
   }
 }
 

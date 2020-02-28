@@ -27,13 +27,31 @@ export const transModels = {
 };
 
 export const transMessages = {
+  common: {
+    blank: 'Please enter required information!'
+  },
   register: {
-    success: 'You have been successfully registered.',
-    failure: 'Registration failed.'
+    success: 'You have been successfully registered!',
+    failure: 'Registration failed!'
   },
   activation: {
     success: 'Your account has been activated!',
-    failure: 'URL is invalid'
+    failure: 'URL is invalid!'
+  },
+  login: {
+    validation: {
+      loginid: {
+        blank: "LoginID is required.",
+      },
+      pwd: {
+        blank: "Password is required.",
+      }
+    },
+    success: (fullname) => { return `Welcome ${fullname}!`; },
+    failure: {
+      invalid: 'Your information you entered is incorrect!',
+      notActived: 'your account has not been activated yet!'
+    }
   }
 }
 
