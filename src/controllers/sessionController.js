@@ -45,7 +45,8 @@ let logout = (req, res) => {
   logger.info('Logout>start');
   let result = {
     flag: true,
-    message: transMessages.logout.success(req.user.fullname)
+    message: transMessages.logout.success(req.user.fullname),
+    type: 'success'
   };
   req.logout();
   req.flash('result', result);

@@ -37,15 +37,14 @@ let localAuth = () => {
     done(null, user._id);
   });
   
-  passport.deserializeUser((id, done) => {
-    let condition = { '_id': id };
-    userModel.find(condition)
-      .then(user => {
-        return done(null, user);
-      })
-      .catch(error => {
-        return done(null, null);
-      })
+  passport.deserializeUser(async (id, done) => {
+    let user = null;
+    try {
+      let condition = { '_id': id };
+      user = await userModel.find(condition);
+    } finally {
+      return done(null, user);
+    }
   });
 };
 
