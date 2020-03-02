@@ -28,7 +28,9 @@ export const transModels = {
 
 export const transMessages = {
   common: {
-    blank: 'Please enter required information!'
+    blank: 'Please enter required information!',
+    requireLogin: 'Please login first!',
+    loggedIn: 'You are already logged in!'
   },
   register: {
     success: 'You have been successfully registered!',
@@ -52,6 +54,9 @@ export const transMessages = {
       invalid: 'Your information you entered is incorrect!',
       notActived: 'your account has not been activated yet!'
     }
+  },
+  logout: {
+    success: (fullname) => { return `See you again, ${fullname}`; }
   }
 }
 

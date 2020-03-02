@@ -17,7 +17,8 @@ let localAuth = () => {
       let result = {
         flag: true,
         message: null,
-        detail: {}
+        detail: {},
+        type: 'success'
       };
       let user = null;
       try {
@@ -25,6 +26,7 @@ let localAuth = () => {
         result.message = transMessages.login.success(user.fullname);
       } catch(error) {
         result.flag = false;
+        result.type = 'error';
         result.message = error;
       }
       return done(null, user, req.flash('result', result));
