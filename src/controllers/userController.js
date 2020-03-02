@@ -15,10 +15,12 @@ let insert = async (req, res) => {
   let result = {
     flag: userValidation.isEmpty(),
     message: undefined,
-    detail: {}
+    detail: {},
+    type: 'success'
   };
   if (!result.flag) {
     logger.error('Register>Validation>fail');
+    result.type = 'error';
     result.message = transMessages.register.failure;
     userValidation.array().forEach(error => {
       if (_.isUndefined(result['detail'][error.param])) { result['detail'][error.param] = []; }
@@ -31,6 +33,7 @@ let insert = async (req, res) => {
       logger.info('Register>insert>success');
       result.message = registerResult;
     } catch (error) {
+      result.type = 'error';
       logger.error('Register>insert>fail');
       result.flag = false;
       result.message = error;
@@ -47,16 +50,19 @@ let active = async (req, res) => {
   let result = {
     flag: true,
     message: undefined,
-    detail: {}
+    detail: {},
+    result: 'success'
   };
   try {
     logger.info(`Active>start: ${token}`);
     await userService.active(token);
+    result.type = 'error';
     result.message = transMessages.activation.success;
     logger.info(`Active>success: ${token}`);
   } catch(error) {
     result.message = transMessages.activation.failure;
     result.flag = false;
+    result.type = 'error';
     logger.error(`Active>fail: ${token}, error: ${error}`);
   }
   req.flash('result', result);

@@ -15,10 +15,12 @@ let authen = (req, res) => {
   let result = {
     flag: authenValidation.isEmpty(),
     message: undefined,
-    detail: {}
+    detail: {},
+    type: 'success'
   };
 
   if (!result.flag) {
+    result.type = 'error';
     logger.error('Login>Validation>error');
     result.message = transMessages.common.blank;
     _.forEach(authenValidation.array(), (error) => {
@@ -39,7 +41,23 @@ let authen = (req, res) => {
   }
 }
 
+let logout = (req, res) => {
+  logger.info('Logout>start');
+  let result = {
+    flag: true,
+    message: transMessages.logout.success(req.user.fullname)
+  };
+  req.logout();
+  req.flash('result', result);
+  logger.info('Logout>success');
+
+  return res.redirect('/login')
+}
+
+
+
 export const sessionController = {
   login: login,
-  authen: authen
+  authen: authen,
+  logout: logout
 };
