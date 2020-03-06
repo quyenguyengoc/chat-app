@@ -21,7 +21,8 @@ export const notLoggedIn = (req, res, next) => {
   let result = {
     flag: true,
     message: transMessages.common.requireLogin,
-    type: 'error'
+    type: 'error',
+    kind: 'flash'
   }
   req.flash('result', result);
   res.redirect('/login');

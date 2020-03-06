@@ -16,11 +16,13 @@ let authen = (req, res) => {
     flag: authenValidation.isEmpty(),
     message: undefined,
     detail: {},
-    type: 'success'
+    type: 'success',
+    kind: 'flash'
   };
 
   if (!result.flag) {
-    result.type = 'error';
+    result.kind = 'alert'
+    result.type = 'danger';
     logger.error('Login>Validation>error');
     result.message = transMessages.common.blank;
     _.forEach(authenValidation.array(), (error) => {
@@ -46,7 +48,8 @@ let logout = (req, res) => {
   let result = {
     flag: true,
     message: transMessages.logout.success(req.user.fullname),
-    type: 'success'
+    type: 'success',
+    kind: 'flash'
   };
   req.logout();
   req.flash('result', result);

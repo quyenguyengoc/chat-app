@@ -18,16 +18,21 @@ let localAuth = () => {
         flag: true,
         message: null,
         detail: {},
-        type: 'success'
+        type: 'success',
+        kind: 'flash'
       };
       let user = null;
       try {
         user = await userService.authen(loginid, pwd);
         result.message = transMessages.login.success(user.fullname);
       } catch(error) {
-        result.flag = false;
-        result.type = 'error';
-        result.message = error;
+        result = {
+          flag: false,
+          message: error,
+          detail: {},
+          type: 'danger',
+          kind: 'alert'
+        };
       }
       return done(null, user, req.flash('result', result));
     })

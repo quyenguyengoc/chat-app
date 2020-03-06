@@ -1,5 +1,5 @@
 (function($) {
-  "use strict";
+  'use strict';
   function alert() {
     if ($('div#flash-content').length) {
       let msg = $('div#flash-content').text();
