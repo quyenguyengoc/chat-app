@@ -57,28 +57,27 @@ let authen = (loginid, pwd) => {
     let condition = {
       $or: [ { 'username': loginid }, { 'local.email': loginid } ]
     }
-    try {
-      logger.info(`Authentication>findLoginid: ${loginid}>success`);
-      let user = await userModel.find(condition);
-      logger.info(`Authentication>authenticate: ${loginid}>start`);
-      if (user.authenticate(pwd)) {
-        if (user.deletedAt) {
-          logger.info(`Authentication>authenticate: ${loginid}>fail`);
-          return reject(transMessages.login.failure.deleted);
-        }
-        if (user.local.isActived) {
-          logger.info(`Authentication>authenticate: ${loginid}>success`);
-          return resolve(user);
-        }
-        logger.error(`Authentication>authenticate: ${loginid}>fail`);
-        return reject(transMessages.login.failure.notActived);
+    let user = await userModel.find(condition);
+    if (_.isNull(user)) {
+      logger.error(`Authentication>findLoginid: ${loginid}>fail`);
+      return reject(transMessages.login.failure.invalid);
+    }
+    logger.info(`Authentication>findLoginid: ${loginid}>success`);
+    logger.info(`Authentication>authenticate: ${loginid}>start`);
+    if (user.authenticate(pwd)) {
+      if (user.deletedAt) {
+        logger.info(`Authentication>authenticate: ${loginid}>fail`);
+        return reject(transMessages.login.failure.deleted);
+      }
+      if (user.local.isActived) {
+        logger.info(`Authentication>authenticate: ${loginid}>success`);
+        return resolve(user);
       }
       logger.error(`Authentication>authenticate: ${loginid}>fail`);
-      reject(transMessages.login.failure.invalid);
-    } catch(error) {
-      logger.error(`Authentication>findLoginid: ${loginid}>fail`);
-      reject(error);
+      return reject(transMessages.login.failure.notActived);
     }
+    logger.error(`Authentication>findLoginid: ${loginid}>fail`);
+    return reject(transMessages.login.failure.invalid);
   })
 }
 
