@@ -51,6 +51,7 @@ export const transMessages = {
     },
     success: (fullname) => { return `Welcome ${fullname}!`; },
     failure: {
+      serverError: 'Something went wrong, please try again!',
       invalid: 'Your information you entered is incorrect!',
       notActived: 'Your account has not been activated yet!',
       deleted: 'Your account has been disabled!'
