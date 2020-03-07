@@ -35,9 +35,9 @@ let insert = async (req, res) => {
       result.message = registerResult;
     } catch (error) {
       result.type = 'danger';
-      logger.error('Register>insert>fail');
+      logger.error(`Register>insert>fail: ${error}`);
       result.flag = false;
-      result.message = error;
+      result.message = transMessages.common.serverError;
     }
   }
   req.flash('result', result);

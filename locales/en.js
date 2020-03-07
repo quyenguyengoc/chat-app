@@ -30,7 +30,8 @@ export const transMessages = {
   common: {
     blank: 'Please enter required information!',
     requireLogin: 'Please login first!',
-    loggedIn: 'You are already logged in!'
+    loggedIn: 'You are already logged in!',
+    serverError: 'Something went wrong, please try again!',
   },
   register: {
     success: 'You have been successfully registered!',
@@ -51,7 +52,6 @@ export const transMessages = {
     },
     success: (fullname) => { return `Welcome ${fullname}!`; },
     failure: {
-      serverError: 'Something went wrong, please try again!',
       invalid: 'Your information you entered is incorrect!',
       notActived: 'Your account has not been activated yet!',
       deleted: 'Your account has been disabled!'
