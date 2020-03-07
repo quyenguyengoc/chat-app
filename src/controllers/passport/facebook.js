@@ -42,7 +42,7 @@ let facebookAuth = () => {
     } catch(error) {
       result = {
         flag: false,
-        message: transMessages.login.failure.serverError,
+        message: transMessages.common.serverError,
         detail: {},
         type: 'danger',
         kind: 'alert'
