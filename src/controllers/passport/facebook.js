@@ -26,8 +26,10 @@ let facebookAuth = () => {
       kind: 'flash'
     };
     try {
+      logger.info('AuthenticateWithFB>start');
       user = await userModel.find(condition);
       if (_.isNull(user)) {
+        logger.info('AuthenticateWithFB>CreateNewUser>start');
         let userInfo = {
           fullname: profile.displayName,
           facebook: {
@@ -37,9 +39,12 @@ let facebookAuth = () => {
           }
         }
         user = await userModel.insert(userInfo);
+        logger.info('AuthenticateWithFB>CreateNewUser>success');
       }
+      logger.info('AuthenticateWithFB>success');
       result.message = transMessages.login.success(user.fullname);
     } catch(error) {
+      logger.error(`AuthenticateWithFB>error: ${error}`);
       result = {
         flag: false,
         message: transMessages.common.serverError,
